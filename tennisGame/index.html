@@ -5,9 +5,17 @@
   <title>Tennis Game</title>
 </head>
 <body>
+  <canvas id="gameCanvas" width="800" height="600"></canvas>
   <script>
     window.onload = function() {
       console.log("Hello, World!");
+
+      // save the canvas for dimensions, and its 2d context for drowing to it
+      canvas = document.getElementById("gameCanvas");
+      canvasContext = canvas.getContext('2d');
+
+      canvasContext.fillStyle = '#000';
+      canvasContext.fillRect(0, 0, canvas.width, canvas.height);
     }
   </script>
 </body>
