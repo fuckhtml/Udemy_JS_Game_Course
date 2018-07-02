@@ -41,6 +41,10 @@
     }
 
     function moveEverything() {
+      if (ballX >= canvas.width || ballX <= 0) {
+        ballSpeedX *= -1;        
+      } 
+
       ballX += ballSpeedX;
       console.log("ballX is " + ballX);        
     }
