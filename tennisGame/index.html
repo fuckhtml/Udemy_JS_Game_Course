@@ -8,11 +8,17 @@
   <canvas id="gameCanvas" width="800" height="600"></canvas>
   <script>
 //    debugger;
+    var canvas;
+    var canvasContext;
+
+    // Ball's settings
     var ballX = 75, ballY = 75;
     var ballSpeedX = 2;
     var ballSpeedY = 2;
-    var canvas;
-    var canvasContext;
+
+    // Player's paddle settings
+    var paddleWidth = 5;
+    var paddleHeight = 100;
 
     window.onload = function() {
       console.log("Hello, World!");
@@ -33,6 +39,12 @@
       // draw a game field
       canvasContext.fillStyle = '#000';
       canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+
+      // draw a player's paddle
+      canvasContext.fillStyle = "#fff";
+      canvasContext.beginPath();
+      canvasContext.rect(5, canvas.height / 2 - paddleHeight / 2, paddleWidth, paddleHeight);
+      canvasContext.fill();
 
       // draw a white circle        
       canvasContext.fillStyle = '#fff';
