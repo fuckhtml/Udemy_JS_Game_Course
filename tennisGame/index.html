@@ -11,12 +11,23 @@
       console.log("Hello, World!");
 
       // save the canvas for dimensions, and its 2d context for drowing to it
-      canvas = document.getElementById("gameCanvas");
-      canvasContext = canvas.getContext('2d');
+      var canvas = document.getElementById("gameCanvas");
+      var canvasContext = canvas.getContext('2d');
 
-      canvasContext.fillStyle = '#000';
-      canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+      drowEverything();
+
+      function drowEverything() {
+        canvasContext.fillStyle = '#000';
+        canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+        
+        canvasContext.fillStyle = '#fff';
+        canvasContext.beginPath();
+        canvasContext.arc(canvas.width / 2, canvas.height / 2 , 10, 0, Math.PI * 2, true);
+        canvasContext.fill();
+      }
+
     }
+
   </script>
 </body>
 </html>
