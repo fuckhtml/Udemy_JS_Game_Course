@@ -9,6 +9,7 @@
   <script>
 //    debugger;
     var ballX = 75, ballY = 75;
+    var ballSpeedX = 2;
     var canvas;
     var canvasContext;
 
@@ -40,7 +41,7 @@
     }
 
     function moveEverything() {
-      ballX += 2;
+      ballX += ballSpeedX;
       console.log("ballX is " + ballX);        
     }
 
