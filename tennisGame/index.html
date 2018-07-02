@@ -7,6 +7,11 @@
 <body>
   <canvas id="gameCanvas" width="800" height="600"></canvas>
   <script>
+//    debugger;
+    var ballX = 75, ballY = 75;
+    var canvas;
+    var canvasContext;
+
     window.onload = function() {
       console.log("Hello, World!");
 
@@ -14,19 +19,21 @@
       var canvas = document.getElementById("gameCanvas");
       var canvasContext = canvas.getContext('2d');
 
-      drowEverything();
+      setInterval(drawEverything, 1000);
 
-      function drowEverything() {
+      function drawEverything() {
         canvasContext.fillStyle = '#000';
         canvasContext.fillRect(0, 0, canvas.width, canvas.height);
         
         canvasContext.fillStyle = '#fff';
         canvasContext.beginPath();
-        canvasContext.arc(canvas.width / 2, canvas.height / 2 , 10, 0, Math.PI * 2, true);
+        canvasContext.arc(ballX, ballY, 10, 0, Math.PI * 2, true);
         canvasContext.fill();
+        ballX += 10;
+        console.log("ballX is " + ballX);
       }
-
     }
+
 
   </script>
 </body>
