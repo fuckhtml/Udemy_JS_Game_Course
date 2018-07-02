@@ -16,24 +16,33 @@
       console.log("Hello, World!");
 
       // save the canvas for dimensions, and its 2d context for drowing to it
-      var canvas = document.getElementById("gameCanvas");
-      var canvasContext = canvas.getContext('2d');
+      canvas = document.getElementById("gameCanvas");
+      canvasContext = canvas.getContext('2d');
 
-      setInterval(drawEverything, 1000);
+      var fps = 30;
+      setInterval(function() {
+        drawEverything();
+        moveEverything();
+      }, 1000 / fps);
 
-      function drawEverything() {
-        canvasContext.fillStyle = '#000';
-        canvasContext.fillRect(0, 0, canvas.width, canvas.height);
-        
-        canvasContext.fillStyle = '#fff';
-        canvasContext.beginPath();
-        canvasContext.arc(ballX, ballY, 10, 0, Math.PI * 2, true);
-        canvasContext.fill();
-        ballX += 10;
-        console.log("ballX is " + ballX);
-      }
     }
 
+    function drawEverything() {
+      // draw a game field
+      canvasContext.fillStyle = '#000';
+      canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+
+      // draw a white circle        
+      canvasContext.fillStyle = '#fff';
+      canvasContext.beginPath();
+      canvasContext.arc(ballX, ballY, 10, 0, Math.PI * 2, true);
+      canvasContext.fill();
+    }
+
+    function moveEverything() {
+      ballX += 2;
+      console.log("ballX is " + ballX);        
+    }
 
   </script>
 </body>
