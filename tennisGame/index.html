@@ -13,8 +13,8 @@
 
     // Ball's settings
     var ballX = 75, ballY = 75;
-    var ballSpeedX = 2;
-    var ballSpeedY = 2;
+    var ballSpeedX = 3;
+    var ballSpeedY = 3;
 
     // Player's paddle settings
     var paddleWidth = 5;
@@ -35,22 +35,26 @@
 
     }
 
+    function colorRect(topLeftX, topLeftY, boxWidth, boxHeight, fillColor) {
+      canvasContext.fillStyle = fillColor;
+      canvasContext.beginPath();
+      canvasContext.fillRect(topLeftX, topLeftY, boxWidth, boxHeight);
+      canvasContext.fill();
+    }
+
+    function colorCircle(centerX, centerY, radius, fillColor) {
+      canvasContext.fillStyle = fillColor;
+      canvasContext.beginPath();
+      canvasContext.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
+      canvasContext.fill();      
+    }
+
     function drawEverything() {
-      // draw a game field
-      canvasContext.fillStyle = '#000';
-      canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+      colorRect(0, 0, canvas.width, canvas.height, '#000');
 
-      // draw a player's paddle
-      canvasContext.fillStyle = "#fff";
-      canvasContext.beginPath();
-      canvasContext.rect(5, canvas.height / 2 - paddleHeight / 2, paddleWidth, paddleHeight);
-      canvasContext.fill();
+      colorRect(5, canvas.height / 2 - paddleHeight / 2, paddleWidth, paddleHeight, '#fff');
 
-      // draw a white circle        
-      canvasContext.fillStyle = '#fff';
-      canvasContext.beginPath();
-      canvasContext.arc(ballX, ballY, 10, 0, Math.PI * 2, true);
-      canvasContext.fill();
+      colorCircle(ballX, ballY, 10, '#fff');
     }
 
     function moveEverything() {
