@@ -34,6 +34,11 @@
       canvas.addEventListener('mousemove', updateMousePos);
     }
 
+    function resetBall() {
+      ballX = canvas.width / 2;
+      ballY = canvas.height / 2;
+    }
+
     function updateAll() {
       drawEverything();
       moveEverything();      
@@ -70,10 +75,17 @@
     }
 
     function moveEverything() {
-      if (ballX >= canvas.width || ballX <= 0) {
+      if ( ballX >= canvas.width ) {
         ballSpeedX *= -1;        
-      } 
-      if (ballY >= canvas.height || ballY <= 0) {
+      }
+      if ( ballX <= 0 ) {
+        ballSpeedX *= -1; 
+      }
+      if ( ballY >= canvas.height ) {
+        resetBall();
+        ballSpeedY *= -1;
+      }
+      if ( ballY <= 0 ) {
         ballSpeedY *= -1;
       }
 
