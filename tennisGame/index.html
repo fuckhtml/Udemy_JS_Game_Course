@@ -17,22 +17,34 @@
     var ballSpeedY = 3;
 
     // Player's paddle settings
-    var paddleWidth = 5;
-    var paddleHeight = 100;
+    const PADDLE_WIDTH = 100;
+    const PADDLE_THICKNESS = 10;
+    var mouseX = 400;
+    var paddleX = mouseX - PADDLE_WIDTH / 2;
+
 
     window.onload = function() {
-      console.log("Hello, World!");
-
       // save the canvas for dimensions, and its 2d context for drowing to it
       canvas = document.getElementById("gameCanvas");
       canvasContext = canvas.getContext('2d');
 
       var fps = 30;
-      setInterval(function() {
-        drawEverything();
-        moveEverything();
-      }, 1000 / fps);
+      setInterval(updateAll, 1000 / fps);
 
+      canvas.addEventListener('mousemove', updateMousePos);
+    }
+
+    function updateAll() {
+      drawEverything();
+      moveEverything();      
+    };
+
+    function updateMousePos(event) {
+       var rect = canvas.getBoundingClientRect();
+       var root = document.documentElement;
+
+       paddleX = event.clientX - rect.left - root.scrollLeft;
+       //var paddleY = event.clientY - rect.top - root.scrollTop;
     }
 
     function colorRect(topLeftX, topLeftY, boxWidth, boxHeight, fillColor) {
@@ -52,7 +64,7 @@
     function drawEverything() {
       colorRect(0, 0, canvas.width, canvas.height, '#000');
 
-      colorRect(5, canvas.height / 2 - paddleHeight / 2, paddleWidth, paddleHeight, '#fff');
+      colorRect(paddleX, canvas.height - PADDLE_THICKNESS - 5, PADDLE_WIDTH, PADDLE_THICKNESS, '#fff');
 
       colorCircle(ballX, ballY, 10, '#fff');
     }
@@ -67,7 +79,6 @@
 
       ballX += ballSpeedX;
       ballY += ballSpeedY;
-      console.log("ballX is " + ballX);        
     }
 
   </script>
