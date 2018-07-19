@@ -20,6 +20,10 @@
     const BRICK_WIDTH = 100;
     const BRIGH_HEIGHT = 50;
     const BRICK_COUNT = 4;
+    var brick1 = true;
+    var brick2 = true;
+    var brick3 = false;
+    var brick4 = true;
 
     // Mouse settings
     var mouseX = 400;
@@ -83,10 +87,18 @@
     }
 
     function drawBricks() {
-      colorRect(5, 5, BRICK_WIDTH, BRIGH_HEIGHT, "white");
-      colorRect((BRICK_WIDTH + 5) * 1 + 5, 5, BRICK_WIDTH, BRIGH_HEIGHT, "white");
-      colorRect((BRICK_WIDTH + 5) * 2 + 5, 5, BRICK_WIDTH, BRIGH_HEIGHT, "white");
-      colorRect((BRICK_WIDTH + 5) * 3 + 5, 5, BRICK_WIDTH, BRIGH_HEIGHT, "white");
+      if ( brick1 ) {
+        colorRect(5, 5, BRICK_WIDTH, BRIGH_HEIGHT, "white");        
+      } 
+      if ( brick2 ) {
+        colorRect((BRICK_WIDTH + 5) * 1 + 5, 5, BRICK_WIDTH, BRIGH_HEIGHT, "white");
+      } 
+      if ( brick3 ) {
+        colorRect((BRICK_WIDTH + 5) * 2 + 5, 5, BRICK_WIDTH, BRIGH_HEIGHT, "white");
+      } 
+      if ( brick4 ) {
+        colorRect((BRICK_WIDTH + 5) * 3 + 5, 5, BRICK_WIDTH, BRIGH_HEIGHT, "white");
+      } 
     }
 
     function drawEverything() {
