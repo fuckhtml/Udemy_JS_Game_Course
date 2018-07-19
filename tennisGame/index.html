@@ -16,11 +16,14 @@
     var ballSpeedX = 3;
     var ballSpeedY = 3;
 
+    // Mouse settings
+    var mouseX = 400;
+    var mouseY;
+
     // Player's paddle settings
     const PADDLE_WIDTH = 100;
     const PADDLE_THICKNESS = 10;
     const PADDLE_DIST_FROM_EDGE = 60;
-    var mouseX = 400;
     var paddleX = mouseX - PADDLE_WIDTH / 2;
 
 
@@ -49,7 +52,10 @@
        var rect = canvas.getBoundingClientRect();
        var root = document.documentElement;
 
-       paddleX = event.clientX - rect.left - root.scrollLeft - PADDLE_WIDTH / 2;
+       mouseX = event.clientX - rect.left - root.scrollLeft
+       mouseY = event.clientY - rect.top - root.scrollTop;
+
+       paddleX = mouseX - PADDLE_WIDTH / 2;
     }
 
     function colorRect(topLeftX, topLeftY, boxWidth, boxHeight, fillColor) {
@@ -66,12 +72,19 @@
       canvasContext.fill();      
     }
 
+    function colorText(showText, textX, textY, fillColor) {
+      canvasContext.fillStyle = fillColor;
+      canvasContext.fillText(showText, textX, textY);
+    }
+
     function drawEverything() {
       colorRect(0, 0, canvas.width, canvas.height, '#000');
 
       colorRect(paddleX, canvas.height - PADDLE_DIST_FROM_EDGE, PADDLE_WIDTH, PADDLE_THICKNESS, '#fff');
 
       colorCircle(ballX, ballY, 10, '#fff');
+
+      colorText(Math.round(mouseX) + "|" + Math.round(mouseY), mouseX, mouseY, "yellow");
     }
 
     function moveEverything() {
