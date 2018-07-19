@@ -91,7 +91,12 @@
       if ( ballX >= paddleLeftEdgeX && ballX <= paddleRightEdgeX &&
            ballY >= paddleTopEdgeY && ballY <= paddleBottomEdgeY ) {
         ballSpeedY *= -1;
+        
+        var centerOfPaddleX = paddleX + PADDLE_WIDTH / 2;
+        var distFromCenterOfPaddleX = ballX - centerOfPaddleX;
+        ballSpeedX = distFromCenterOfPaddleX * 0.25;
       }
+
 
       ballX += ballSpeedX;
       ballY += ballSpeedY;
