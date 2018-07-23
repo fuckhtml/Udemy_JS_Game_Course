@@ -116,27 +116,6 @@
       }
     }
 
-    function getBrickParametres() {
-      var brickCol = Math.floor(mouseX / (BRICK_WIDTH + BRICK_GAP) + 1);
-      var brickRow = Math.floor(mouseY / (BRICK_HEIGHT + BRICK_GAP) + 1);
-      var brickIndex = ((brickRow - 1) * BRICK_COLS + brickCol) - 1;
-      var brickParametres = {
-        col: brickCol,
-        row: brickRow,
-        index: brickIndex
-      }
-      if (brickParametres.index < brickGrid.length && brickGrid[brickParametres.index]) {
-        brickGrid[brickParametres.index] = false;
-      }
-      return brickParametres;
-    }
-
-    function drawBrickParametres() {
-      var brickParams = getBrickParametres();
-      brickParams = brickParams.col + "|" + brickParams.row + "||" + brickParams.index;
-      colorText(brickParams, mouseX, mouseY, "yellow");
-    }
-
     function drawEverything() {
       colorRect(0, 0, canvas.width, canvas.height, '#000');
 
@@ -145,11 +124,10 @@
       colorCircle(ballX, ballY, 10, '#fff');
 
       drawBricks();
-
-      drawBrickParametres();
     }
 
     function moveEverything() {
+      // reflects a ball from canvas ages
       if ( ballX <= 0 ) ballSpeedX *= -1;
       if ( ballX >= canvas.width ) ballSpeedX *= -1;
       if ( ballY <= 0 ) ballSpeedY *= -1;
@@ -158,6 +136,16 @@
         ballSpeedY *= -1;
       }
 
+      // removes bricks when ball touches
+      var brickColUnderBall = Math.floor(ballX / (BRICK_WIDTH + BRICK_GAP) + 1);
+      var brickRowUnderBall = Math.floor(ballY / (BRICK_HEIGHT + BRICK_GAP) + 1);
+      var brickIndexUnderBall = ((brickRowUnderBall - 1) * BRICK_COLS + brickColUnderBall) - 1;
+      if ( brickIndexUnderBall < brickGrid.length && 
+           brickGrid[brickIndexUnderBall] ) {
+        brickGrid[brickIndexUnderBall] = false;
+      } 
+
+      // Reflects a ball from a paddle
       var paddleLeftEdgeX = paddleX;
       var paddleRightEdgeX = paddleLeftEdgeX + PADDLE_WIDTH;
       var paddleTopEdgeY = canvas.height - PADDLE_DIST_FROM_EDGE;
