@@ -26,7 +26,7 @@
     // Mouse settings
     var mouseX = 400;
     var mouseY;
-
+    
     // Player's paddle settings
     const PADDLE_WIDTH = 100;
     const PADDLE_THICKNESS = 10;
@@ -88,7 +88,7 @@
       canvasContext.fillStyle = fillColor;
       canvasContext.beginPath();
       canvasContext.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
-      canvasContext.fill();      
+      canvasContext.fill();
     }
 
     function colorText(showText, textX, textY, fillColor) {
@@ -113,7 +113,9 @@
 
       drawBricks();
 
-      colorText(Math.round(mouseX) + "|" + Math.round(mouseY), mouseX, mouseY, "yellow");
+      var mouseBrickCol = Math.floor(mouseX / (BRICK_WIDTH + BRICK_GAP) + 1);
+      var mouseBrickRow = Math.floor(mouseY / (BRIGH_HEIGHT + BRICK_GAP) + 1);
+      colorText(mouseBrickCol + "|" + mouseBrickRow, mouseX, mouseY, "yellow");
     }
 
     function moveEverything() {
@@ -138,7 +140,6 @@
         var distFromCenterOfPaddleX = ballX - centerOfPaddleX;
         ballSpeedX = distFromCenterOfPaddleX * 0.25;
       }
-
 
       ballX += ballSpeedX;
       ballY += ballSpeedY;
