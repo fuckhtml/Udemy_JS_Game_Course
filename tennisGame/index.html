@@ -5,7 +5,7 @@
   <title>Tennis Game</title>
 </head>
 <body>
-  <canvas id="gameCanvas" width="845" height="600"></canvas>
+  <canvas id="gameCanvas" width="855" height="600"></canvas>
   <script>
 //    debugger;
     var canvas;
@@ -17,11 +17,11 @@
     var ballSpeedY = 3;
 
     // Brick's settings
-    const BRICK_WIDTH = 100;
-    const BRICK_HEIGHT = 50;
+    const BRICK_WIDTH = 80;
+    const BRICK_HEIGHT = 20;
     const BRICK_GAP = 5;
-    const BRICK_COLS = 8;
-    const BRICK_ROWS = 3;
+    const BRICK_COLS = 10;
+    const BRICK_ROWS = 14;
     var brickGrid = new Array(BRICK_COLS * BRICK_ROWS);
 
     // Mouse settings
@@ -111,9 +111,16 @@
             var brickX = (BRICK_WIDTH + BRICK_GAP) * eachCol + BRICK_GAP;
             colorRect(brickX , brickY, BRICK_WIDTH, BRICK_HEIGHT, "white");
           }
-
         }
       }
+    }
+
+    function drawBricksParametres() {
+      var brickCol = Math.floor(mouseX / (BRICK_WIDTH + BRICK_GAP) + 1);
+      var brickRow = Math.floor(mouseY / (BRICK_HEIGHT + BRICK_GAP) + 1);
+      var brickNum = (brickRow - 1) * BRICK_COLS + brickCol;
+      var brickParametres = brickCol + "|" + brickRow + "||" + brickNum;
+      colorText(brickParametres, mouseX, mouseY, "red");
     }
 
     function drawEverything() {
@@ -125,9 +132,7 @@
 
       drawBricks();
 
-      var mouseBrickCol = Math.floor(mouseX / (BRICK_WIDTH + BRICK_GAP) + 1);
-      var mouseBrickRow = Math.floor(mouseY / (BRICK_HEIGHT + BRICK_GAP) + 1);
-      colorText(mouseBrickCol + "|" + mouseBrickRow, mouseX, mouseY, "yellow");
+      drawBricksParametres();
     }
 
     function moveEverything() {
