@@ -36,7 +36,7 @@
 
 
     window.onload = function() {
-      // save the canvas for dimensions, and its 2d context for drowing to it
+      // save the canvas for dimensions, and its 2d context for drawing to it
       canvas = document.getElementById("gameCanvas");
       canvasContext = canvas.getContext('2d');
 
@@ -57,15 +57,16 @@
       var brickCount = BRICK_ROWS * BRICK_COLS;
       for ( var eachBrick = 0; eachBrick < brickCount; eachBrick++ ) {
         // Show all bricks
-        //brickGrid[eachBrick] = true;
+        brickGrid[eachBrick] = true;
         
         // Show bricks randomly
+        /*
         if (Math.random() < 0.5) {
           brickGrid[eachBrick] = true;
         } else {
           brickGrid[eachBrick] = false;
         }
-        
+        */
       }
     }
 
@@ -104,23 +105,36 @@
     }
 
     function drawBricks() {
-      for ( var eachCol = 0; eachCol < BRICK_COLS; eachCol++ ) {        
-        for ( var eachRow = 0; eachRow < BRICK_ROWS; eachRow++ ) {          
-          if ( brickGrid[eachRow + eachCol] == true ) {
-            var brickY = (BRICK_HEIGHT + BRICK_GAP) * eachRow + BRICK_GAP;
-            var brickX = (BRICK_WIDTH + BRICK_GAP) * eachCol + BRICK_GAP;
-            colorRect(brickX , brickY, BRICK_WIDTH, BRICK_HEIGHT, "white");
+      for (var numOfRow = 0; numOfRow < BRICK_ROWS; numOfRow++) {
+        var y = (BRICK_HEIGHT + BRICK_GAP) * numOfRow + BRICK_GAP;
+        for (var numOfCol = 0; numOfCol < BRICK_COLS; numOfCol++) {
+          var x = (BRICK_WIDTH + BRICK_GAP) * numOfCol + BRICK_GAP;
+          if ( brickGrid[numOfRow * BRICK_COLS + numOfCol] ) {
+            colorRect(x, y, BRICK_WIDTH, BRICK_HEIGHT, "blue");
           }
         }
       }
     }
 
-    function drawBricksParametres() {
+    function getBrickParametres() {
       var brickCol = Math.floor(mouseX / (BRICK_WIDTH + BRICK_GAP) + 1);
       var brickRow = Math.floor(mouseY / (BRICK_HEIGHT + BRICK_GAP) + 1);
-      var brickNum = (brickRow - 1) * BRICK_COLS + brickCol;
-      var brickParametres = brickCol + "|" + brickRow + "||" + brickNum;
-      colorText(brickParametres, mouseX, mouseY, "red");
+      var brickIndex = ((brickRow - 1) * BRICK_COLS + brickCol) - 1;
+      var brickParametres = {
+        col: brickCol,
+        row: brickRow,
+        index: brickIndex
+      }
+      if (brickParametres.index < brickGrid.length && brickGrid[brickParametres.index]) {
+        brickGrid[brickParametres.index] = false;
+      }
+      return brickParametres;
+    }
+
+    function drawBrickParametres() {
+      var brickParams = getBrickParametres();
+      brickParams = brickParams.col + "|" + brickParams.row + "||" + brickParams.index;
+      colorText(brickParams, mouseX, mouseY, "yellow");
     }
 
     function drawEverything() {
@@ -132,7 +146,7 @@
 
       drawBricks();
 
-      drawBricksParametres();
+      drawBrickParametres();
     }
 
     function moveEverything() {
