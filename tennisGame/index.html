@@ -5,7 +5,7 @@
   <title>Tennis Game</title>
 </head>
 <body>
-  <canvas id="gameCanvas" width="800" height="600"></canvas>
+  <canvas id="gameCanvas" width="845" height="600"></canvas>
   <script>
 //    debugger;
     var canvas;
@@ -18,10 +18,11 @@
 
     // Brick's settings
     const BRICK_WIDTH = 100;
-    const BRIGH_HEIGHT = 50;
-    const BRICK_COUNT = 7;
+    const BRICK_HEIGHT = 50;
     const BRICK_GAP = 5;
-    var brickGrid = new Array(BRICK_COUNT);
+    const BRICK_COLS = 8;
+    const BRICK_ROWS = 3;
+    var brickGrid = new Array(BRICK_COLS * BRICK_ROWS);
 
     // Mouse settings
     var mouseX = 400;
@@ -53,12 +54,18 @@
     }
 
     function brickReset() {
-      for ( var i = 0; i < BRICK_COUNT; i++ ) {
+      var brickCount = BRICK_ROWS * BRICK_COLS;
+      for ( var eachBrick = 0; eachBrick < brickCount; eachBrick++ ) {
+        // Show all bricks
+        //brickGrid[eachBrick] = true;
+        
+        // Show bricks randomly
         if (Math.random() < 0.5) {
-          brickGrid[i] = true;
+          brickGrid[eachBrick] = true;
         } else {
-          brickGrid[i] = false;
+          brickGrid[eachBrick] = false;
         }
+        
       }
     }
 
@@ -97,9 +104,14 @@
     }
 
     function drawBricks() {
-      for ( var i = 0; i < BRICK_COUNT; i++ ) {
-        if ( brickGrid[i] == true ) {
-          colorRect( (BRICK_WIDTH + BRICK_GAP) * i + BRICK_GAP, 5, BRICK_WIDTH, BRIGH_HEIGHT, "white");
+      for ( var eachCol = 0; eachCol < BRICK_COLS; eachCol++ ) {        
+        for ( var eachRow = 0; eachRow < BRICK_ROWS; eachRow++ ) {          
+          if ( brickGrid[eachRow + eachCol] == true ) {
+            var brickY = (BRICK_HEIGHT + BRICK_GAP) * eachRow + BRICK_GAP;
+            var brickX = (BRICK_WIDTH + BRICK_GAP) * eachCol + BRICK_GAP;
+            colorRect(brickX , brickY, BRICK_WIDTH, BRICK_HEIGHT, "white");
+          }
+
         }
       }
     }
@@ -114,7 +126,7 @@
       drawBricks();
 
       var mouseBrickCol = Math.floor(mouseX / (BRICK_WIDTH + BRICK_GAP) + 1);
-      var mouseBrickRow = Math.floor(mouseY / (BRIGH_HEIGHT + BRICK_GAP) + 1);
+      var mouseBrickRow = Math.floor(mouseY / (BRICK_HEIGHT + BRICK_GAP) + 1);
       colorText(mouseBrickCol + "|" + mouseBrickRow, mouseX, mouseY, "yellow");
     }
 
