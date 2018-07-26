@@ -12,7 +12,8 @@
     var canvasContext;
 
     // Ball's settings
-    var ballX = 75, ballY = 75;
+    var ballX;
+    var ballY;
     var ballSpeedX = 3;
     var ballSpeedY = 3;
 
@@ -41,14 +42,16 @@
       canvasContext = canvas.getContext('2d');
 
       brickReset();
+      ballReset();
 
       canvas.addEventListener('mousemove', updateMousePos);
+
 
       var fps = 30;
       setInterval(updateAll, 1000 / fps);
     }
 
-    function resetBall() {
+    function ballReset() {
       ballX = canvas.width / 2;
       ballY = canvas.height / 2;
     }
@@ -135,7 +138,7 @@
       if ( ballX >= canvas.width ) ballSpeedX *= -1;
       if ( ballY <= 0 ) ballSpeedY *= -1;
       if ( ballY >= canvas.height ) {
-        resetBall();
+        ballReset();
         ballSpeedY *= -1;
       }
     }
@@ -147,17 +150,21 @@
       var brickIndexUnderBall = ((brickRowUnderBall - 1) * BRICK_COLS + brickColUnderBall) - 1;
       if ( brickIndexUnderBall < brickGrid.length && 
            brickGrid[brickIndexUnderBall] ) {
-        brickGrid[brickIndexUnderBall] = false;
-        //  where to reflect the ball
-        var prevBallX = ballX - ballSpeedX;
-        var prevBallY = ballY - ballSpeedY;
-        var prevBrickColUnderBall = Math.floor(prevBallX / (BRICK_WIDTH + BRICK_GAP) + 1);
-        var prevBrickRowUnderBall = Math.floor(prevBallY / (BRICK_HEIGHT + BRICK_GAP) + 1);
-        
-        if (prevBrickColUnderBall != brickColUnderBall) ballSpeedX *= -1;
-        if (prevBrickRowUnderBall != brickRowUnderBall) ballSpeedY *= -1;
-      } 
-    }
+        if ( brickColUnderBall >= 1 && brickColUnderBall <= BRICK_COLS && 
+             brickRowUnderBall >= 1 && brickColUnderBall <= BRICK_ROWS ) {
+          brickGrid[brickIndexUnderBall] = false;  
+
+          //  where to reflect the ball
+          var prevBallX = ballX - ballSpeedX;
+          var prevBallY = ballY - ballSpeedY;
+          var prevBrickColUnderBall = Math.floor(prevBallX / (BRICK_WIDTH + BRICK_GAP) + 1);
+          var prevBrickRowUnderBall = Math.floor(prevBallY / (BRICK_HEIGHT + BRICK_GAP) + 1);
+          
+          if (prevBrickColUnderBall != brickColUnderBall) ballSpeedX *= -1;
+          if (prevBrickRowUnderBall != brickRowUnderBall) ballSpeedY *= -1;
+        } // end of fix brick on opposite edge removing bug        
+      } // end of checking if the ball above the existing brick
+    } // end of function
 
     function ballPaddleHandeling() {
       // Reflects a ball from a paddle
