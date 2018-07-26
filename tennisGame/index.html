@@ -189,7 +189,12 @@
         var centerOfPaddleX = paddleX + PADDLE_WIDTH / 2;
         var distFromCenterOfPaddleX = ballX - centerOfPaddleX;
         ballSpeedX = distFromCenterOfPaddleX * 0.25;
-      }      
+      }
+
+      if (bricksLeft == 0) {
+        ballReset();
+        brickReset();
+      }
     }
 
     function moveEverything() {
