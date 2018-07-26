@@ -59,7 +59,12 @@
 
     function brickReset() {
       var brickCount = BRICK_ROWS * BRICK_COLS;
-      for ( var eachBrick = 0; eachBrick < brickCount; eachBrick++ ) {
+      var eachBrick = 0;
+      var gutterAtTop = 3 * BRICK_COLS;
+      for ( eachBrick; eachBrick < gutterAtTop; eachBrick++ ) {
+        brickGrid[eachBrick] = false;        
+      }
+      for ( eachBrick; eachBrick < brickCount; eachBrick++ ) {
         // Show all bricks
         brickGrid[eachBrick] = true;
         bricksLeft++;
