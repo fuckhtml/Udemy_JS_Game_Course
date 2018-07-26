@@ -29,13 +29,6 @@
     // Mouse settings
     var mouseX = 400;
     var mouseY;
-    
-    // Player's paddle settings
-    const PADDLE_WIDTH = 100;
-    const PADDLE_THICKNESS = 10;
-    const PADDLE_DIST_FROM_EDGE = 60;
-    var paddleX = mouseX - PADDLE_WIDTH / 2;
-
 
     window.onload = function() {
       // save the canvas for dimensions, and its 2d context for drawing to it
@@ -92,8 +85,6 @@
        mouseX = event.clientX - rect.left - root.scrollLeft
        mouseY = event.clientY - rect.top - root.scrollTop;
 
-       paddleX = mouseX - PADDLE_WIDTH / 2;
-
        // cheat / to check for bugs 
        /*
        ballX = mouseX;
@@ -134,8 +125,6 @@
 
     function drawEverything() {
       colorRect(0, 0, canvas.width, canvas.height, '#000');
-
-      colorRect(paddleX, canvas.height - PADDLE_DIST_FROM_EDGE, PADDLE_WIDTH, PADDLE_THICKNESS, '#fff');
 
       colorCircle(ballX, ballY, 10, '#fff');
 
@@ -181,32 +170,9 @@
       } // end of checking if the ball above the existing brick
     } // end of function
 
-    function ballPaddleHandeling() {
-      // Reflects a ball from a paddle
-      var paddleLeftEdgeX = paddleX;
-      var paddleRightEdgeX = paddleLeftEdgeX + PADDLE_WIDTH;
-      var paddleTopEdgeY = canvas.height - PADDLE_DIST_FROM_EDGE;
-      var paddleBottomEdgeY = paddleTopEdgeY + PADDLE_THICKNESS;
-
-      if ( ballX >= paddleLeftEdgeX && ballX <= paddleRightEdgeX &&
-           ballY >= paddleTopEdgeY && ballY <= paddleBottomEdgeY ) {
-        ballSpeedY *= -1;
-        
-        var centerOfPaddleX = paddleX + PADDLE_WIDTH / 2;
-        var distFromCenterOfPaddleX = ballX - centerOfPaddleX;
-        ballSpeedX = distFromCenterOfPaddleX * 0.25;
-      }
-
-      if (bricksLeft == 0) {
-        ballReset();
-        brickReset();
-      }
-    }
-
     function moveEverything() {
       ballMove();
       ballBrickHandling();
-      ballPaddleHandeling();
     }
 
   </script>
