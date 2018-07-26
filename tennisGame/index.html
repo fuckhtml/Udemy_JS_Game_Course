@@ -24,6 +24,7 @@
     const BRICK_COLS = 10;
     const BRICK_ROWS = 14;
     var brickGrid = new Array(BRICK_COLS * BRICK_ROWS);
+    var bricksLeft = 0;
 
     // Mouse settings
     var mouseX = 400;
@@ -61,7 +62,8 @@
       for ( var eachBrick = 0; eachBrick < brickCount; eachBrick++ ) {
         // Show all bricks
         brickGrid[eachBrick] = true;
-        
+        bricksLeft++;
+
         // Show bricks randomly
         /*
         if (Math.random() < 0.5) {
@@ -153,6 +155,8 @@
         if ( brickColUnderBall >= 1 && brickColUnderBall <= BRICK_COLS && 
              brickRowUnderBall >= 1 && brickColUnderBall <= BRICK_ROWS ) {
           brickGrid[brickIndexUnderBall] = false;  
+          bricksLeft--;
+          console.log(bricksLeft);
 
           //  where to reflect the ball
           var prevBallX = ballX - ballSpeedX;
