@@ -93,6 +93,12 @@
        mouseY = event.clientY - rect.top - root.scrollTop;
 
        paddleX = mouseX - PADDLE_WIDTH / 2;
+
+       // cheat / to check for bugs 
+       /*
+       ballX = mouseX;
+       ballY = mouseY;
+       */
     }
 
     function colorRect(topLeftX, topLeftY, boxWidth, boxHeight, fillColor) {
