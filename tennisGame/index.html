@@ -126,7 +126,10 @@
       drawBricks();
     }
 
-    function moveEverything() {
+    function ballMove() {
+      ballX += ballSpeedX;
+      ballY += ballSpeedY;     
+
       // reflects a ball from canvas ages
       if ( ballX <= 0 ) ballSpeedX *= -1;
       if ( ballX >= canvas.width ) ballSpeedX *= -1;
@@ -135,7 +138,9 @@
         resetBall();
         ballSpeedY *= -1;
       }
+    }
 
+    function ballBrickHandling() {
       // removes bricks when ball touches
       var brickColUnderBall = Math.floor(ballX / (BRICK_WIDTH + BRICK_GAP) + 1);
       var brickRowUnderBall = Math.floor(ballY / (BRICK_HEIGHT + BRICK_GAP) + 1);
@@ -143,8 +148,18 @@
       if ( brickIndexUnderBall < brickGrid.length && 
            brickGrid[brickIndexUnderBall] ) {
         brickGrid[brickIndexUnderBall] = false;
+        //  where to reflect the ball
+        var prevBallX = ballX - ballSpeedX;
+        var prevBallY = ballY - ballSpeedY;
+        var prevBrickColUnderBall = Math.floor(prevBallX / (BRICK_WIDTH + BRICK_GAP) + 1);
+        var prevBrickRowUnderBall = Math.floor(prevBallY / (BRICK_HEIGHT + BRICK_GAP) + 1);
+        
+        if (prevBrickColUnderBall != brickColUnderBall) ballSpeedX *= -1;
+        if (prevBrickRowUnderBall != brickRowUnderBall) ballSpeedY *= -1;
       } 
+    }
 
+    function ballPaddleHandeling() {
       // Reflects a ball from a paddle
       var paddleLeftEdgeX = paddleX;
       var paddleRightEdgeX = paddleLeftEdgeX + PADDLE_WIDTH;
@@ -158,10 +173,13 @@
         var centerOfPaddleX = paddleX + PADDLE_WIDTH / 2;
         var distFromCenterOfPaddleX = ballX - centerOfPaddleX;
         ballSpeedX = distFromCenterOfPaddleX * 0.25;
-      }
+      }      
+    }
 
-      ballX += ballSpeedX;
-      ballY += ballSpeedY;
+    function moveEverything() {
+      ballMove();
+      ballBrickHandling();
+      ballPaddleHandeling();
     }
 
   </script>
