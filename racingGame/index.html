@@ -5,7 +5,7 @@
   <title>Tennis Game</title>
 </head>
 <body>
-  <canvas id="gameCanvas" width="855" height="600"></canvas>
+  <canvas id="gameCanvas" width="815" height="590"></canvas>
   <script>
 //    debugger;
     var canvas;
@@ -18,11 +18,11 @@
     var ballSpeedY = 3;
 
     // Track's settings
-    const TRACK_WIDTH = 80;
-    const TRACK_HEIGHT = 20;
+    const TRACK_WIDTH = 40;
+    const TRACK_HEIGHT = 40;
     const TRACK_GAP = 5;
-    const TRACK_COLS = 10;
-    const TRACK_ROWS = 14;
+    const TRACK_COLS = 18;
+    const TRACK_ROWS = 13;
     var trackGrid = new Array(TRACK_COLS * TRACK_ROWS);
     var tracksLeft = 0;
 
@@ -52,12 +52,7 @@
 
     function trackReset() {
       var trackCount = TRACK_ROWS * TRACK_COLS;
-      var eachTrack = 0;
-      var gutterAtTop = 3 * TRACK_COLS;
-      for ( eachTrack; eachTrack < gutterAtTop; eachTrack++ ) {
-        trackGrid[eachTrack] = false;        
-      }
-      for ( eachTrack; eachTrack < trackCount; eachTrack++ ) {
+      for ( eachTrack = 0; eachTrack < trackCount; eachTrack++ ) {
         // Show all tracks
         trackGrid[eachTrack] = true;
         tracksLeft++;
@@ -133,7 +128,7 @@
 
     function ballMove() {
       ballX += ballSpeedX;
-      ballY += ballSpeedY;     
+      ballY += ballSpeedY;
 
       // reflects a ball from canvas ages
       if ( ballX < 0 && ballSpeedX < 0.0) ballSpeedX *= -1;
