@@ -23,7 +23,19 @@
     const TRACK_GAP = 5;
     const TRACK_COLS = 18;
     const TRACK_ROWS = 13;
-    var trackGrid = new Array(TRACK_COLS * TRACK_ROWS);
+    var trackGrid = [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+                      1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+                      1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+                      1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+                      1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+                      1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+                      1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+                      1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+                      1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+                      1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+                      1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+                      1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+                      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ];
     var tracksLeft = 0;
 
     // Mouse settings
@@ -35,7 +47,6 @@
       canvas = document.getElementById("gameCanvas");
       canvasContext = canvas.getContext('2d');
 
-      trackReset();
       ballReset();
 
       canvas.addEventListener('mousemove', updateMousePos);
@@ -48,24 +59,6 @@
     function ballReset() {
       ballX = canvas.width / 2;
       ballY = canvas.height / 2;
-    }
-
-    function trackReset() {
-      var trackCount = TRACK_ROWS * TRACK_COLS;
-      for ( eachTrack = 0; eachTrack < trackCount; eachTrack++ ) {
-        // Show all tracks
-        trackGrid[eachTrack] = true;
-        tracksLeft++;
-
-        // Show tracks randomly
-        /*
-        if (Math.random() < 0.5) {
-          trackGrid[eachTrack] = true;
-        } else {
-          trackGrid[eachTrack] = false;
-        }
-        */
-      }
     }
 
     function updateAll() {
@@ -111,7 +104,7 @@
         var y = (TRACK_HEIGHT + TRACK_GAP) * numOfRow + TRACK_GAP;
         for (var numOfCol = 0; numOfCol < TRACK_COLS; numOfCol++) {
           var x = (TRACK_WIDTH + TRACK_GAP) * numOfCol + TRACK_GAP;
-          if ( trackGrid[numOfRow * TRACK_COLS + numOfCol] ) {
+          if ( trackGrid[numOfRow * TRACK_COLS + numOfCol] == 1) {
             colorRect(x, y, TRACK_WIDTH, TRACK_HEIGHT, "blue");
           }
         }
@@ -130,40 +123,52 @@
       ballX += ballSpeedX;
       ballY += ballSpeedY;
 
-      // reflects a ball from canvas ages
+      // reflects a ball from canvas adges
       if ( ballX < 0 && ballSpeedX < 0.0) ballSpeedX *= -1;
       if ( ballX > canvas.width && ballSpeedX > 0.0) ballSpeedX *= -1;
       if ( ballY < 0 && ballSpeedY < 0.0) ballSpeedY *= -1;
-      if ( ballY > canvas.height ) {
-        ballReset();
-        trackReset();
-      }
+      if ( ballY > canvas.height ) ballSpeedY *= -1;
+    }
+
+    function colRowToArrayIndex(col, row) {
+      var trackIndexUnderBall = ((row - 1) * TRACK_COLS + col) - 1;
+      return trackIndexUnderBall;
+    }
+
+    function isTrackAtColRow(col, row) {
+      var index = colRowToArrayIndex(col, row);
+      if ( index < trackGrid.length &&      //*  check if the brick is inside the field
+           col >= 1 && col <= TRACK_COLS && //** check for fixing bug with opposite edge removing
+           row >= 1 && row <= TRACK_ROWS && //**
+           trackGrid[colRowToArrayIndex(col, row)] == 1 ) //*** check if the brick is visible
+        return true;
+      else
+        return false;
+    }
+
+    function getColFromX(x) {
+      return Math.floor(x / (TRACK_WIDTH + TRACK_GAP) + 1)
+    }
+
+    function getRowFromY(y) {
+      return Math.floor(y / (TRACK_HEIGHT + TRACK_GAP) + 1)
     }
 
     function ballTrackHandling() {
-      // removes tracks when ball touches
-      var trackColUnderBall = Math.floor(ballX / (TRACK_WIDTH + TRACK_GAP) + 1);
-      var trackRowUnderBall = Math.floor(ballY / (TRACK_HEIGHT + TRACK_GAP) + 1);
-      var trackIndexUnderBall = ((trackRowUnderBall - 1) * TRACK_COLS + trackColUnderBall) - 1;
-      if ( trackIndexUnderBall < trackGrid.length && 
-           trackGrid[trackIndexUnderBall] ) {
-        if ( trackColUnderBall >= 1 && trackColUnderBall <= TRACK_COLS && 
-             trackRowUnderBall >= 1 && trackColUnderBall <= TRACK_ROWS ) {
-          trackGrid[trackIndexUnderBall] = false;  
-          tracksLeft--;
-          console.log(tracksLeft);
-
+      var trackCol = getColFromX(ballX);
+      var trackRow = getRowFromY(ballY);
+      var trackIndex = colRowToArrayIndex(trackCol, trackRow);
+      if ( isTrackAtColRow(trackCol, trackRow) ) {
           //  where to reflect the ball
           var prevBallX = ballX - ballSpeedX;
           var prevBallY = ballY - ballSpeedY;
-          var prevTrackColUnderBall = Math.floor(prevBallX / (TRACK_WIDTH + TRACK_GAP) + 1);
-          var prevTrackRowUnderBall = Math.floor(prevBallY / (TRACK_HEIGHT + TRACK_GAP) + 1);
-          
-          if (prevTrackColUnderBall != trackColUnderBall) ballSpeedX *= -1;
-          if (prevTrackRowUnderBall != trackRowUnderBall) ballSpeedY *= -1;
-        } // end of fix track on opposite edge removing bug        
-      } // end of checking if the ball above the existing track
-    } // end of function
+          var prevTrackCol = Math.floor(prevBallX / (TRACK_WIDTH + TRACK_GAP) + 1);
+          var prevTrackRow = Math.floor(prevBallY / (TRACK_HEIGHT + TRACK_GAP) + 1);
+
+          if (prevTrackCol != trackCol) ballSpeedX *= -1;
+          if (prevTrackRow != trackRow) ballSpeedY *= -1;
+      }
+    } 
 
     function moveEverything() {
       ballMove();
