@@ -12,6 +12,9 @@
     var canvasContext;
 
     // Ball's settings
+    var carPic = document.createElement("img");
+    var carPicLoaded = false;
+
     var ballX;
     var ballY;
     var ballSpeedX = 3;
@@ -51,6 +54,10 @@
 
       canvas.addEventListener('mousemove', updateMousePos);
 
+      carPic.onload = function() {
+        carPicLoaded = true;
+      }
+      carPic.src = "player_1.png";
 
       var fps = 30;
       setInterval(updateAll, 1000 / fps);
@@ -122,7 +129,10 @@
     function drawEverything() {
       colorRect(0, 0, canvas.width, canvas.height, '#000');
 
-      colorCircle(ballX, ballY, 10, '#fff');
+      //colorCircle(ballX, ballY, 10, '#fff');
+      if (carPicLoaded) {
+        canvasContext.drawImage(carPic, ballX - carPic.width / 2, ballY - carPic.height / 2);
+      }
 
       drawTracks();
     }
