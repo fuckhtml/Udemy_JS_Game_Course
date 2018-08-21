@@ -52,6 +52,8 @@
       carReset();
 
       canvas.addEventListener('mousemove', updateMousePos);
+      document.addEventListener('keydown', keyPressed);
+      document.addEventListener('keyup', keyReleased);
 
       carPic.onload = function() {
         carPicLoaded = true;
@@ -60,6 +62,14 @@
 
       var fps = 30;
       setInterval(updateAll, 1000 / fps);
+    }
+
+    function keyPressed(event) {
+      console.log("Key pressed:  " + event.keyCode);
+    }
+
+    function keyReleased(event) {
+      console.log("Key released: " + event.keyCode)
     }
 
     function updateAll() {
