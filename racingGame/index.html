@@ -11,7 +11,7 @@
     var canvas;
     var canvasContext;
 
-    // Ball's settings
+    // Car's settings
     var carPic = document.createElement("img");
     var carPicLoaded = false;
 
@@ -150,8 +150,8 @@
     }
 
     function colRowToArrayIndex(col, row) {
-      var trackIndexUnderBall = ((row - 1) * TRACK_COLS + col) - 1;
-      return trackIndexUnderBall;
+      var trackIndexUndercar = ((row - 1) * TRACK_COLS + col) - 1;
+      return trackIndexUnderCar;
     }
 
     function isTrackAtColRow(col, row) {
@@ -179,10 +179,10 @@
       var trackIndex = colRowToArrayIndex(trackCol, trackRow);
       if ( isTrackAtColRow(trackCol, trackRow) ) {
           //  where to reflect the car
-          var prevBallX = carX - carSpeedX;
-          var prevBallY = carY - carSpeedY;
-          var prevTrackCol = getColFromX(prevBallX);
-          var prevTrackRow = getRowFromY(prevBallY);
+          var prevCarX = carX - carSpeedX;
+          var prevCarY = carY - carSpeedY;
+          var prevTrackCol = getColFromX(prevCarX);
+          var prevTrackRow = getRowFromY(prevCarY);
 
           if (prevTrackCol != trackCol) carSpeedX *= -1;
           if (prevTrackRow != trackRow) carSpeedY *= -1;
