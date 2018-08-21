@@ -7,7 +7,6 @@
 <body>
   <canvas id="gameCanvas" width="815" height="590"></canvas>
   <script>
-//    debugger;
     var canvas;
     var canvasContext;
 
@@ -18,8 +17,7 @@
     var carX;
     var carY;
     var carAng = 0;
-    var carSpeedX = 3;
-    var carSpeedY = 3;
+    var carSpeed = 3;
 
     // Track's settings
     const TRACK_WIDTH = 40;
@@ -64,6 +62,11 @@
       setInterval(updateAll, 1000 / fps);
     }
 
+    function updateAll() {
+      drawEverything();
+      moveEverything();
+    };
+
     function carReset() {
       for (var row = 1; row <= TRACK_ROWS; row++) {
         for (var col = 1; col <= TRACK_COLS; col++) {
@@ -76,11 +79,6 @@
         }
       }
     }
-
-    function updateAll() {
-      drawEverything();
-      moveEverything();
-    };
 
     function updateMousePos(event) {
        var rect = canvas.getBoundingClientRect();
@@ -122,13 +120,12 @@
           var x = (TRACK_WIDTH + TRACK_GAP) * numOfCol + TRACK_GAP;
           if ( trackGrid[numOfRow * TRACK_COLS + numOfCol] == 1) {
             colorRect(x, y, TRACK_WIDTH, TRACK_HEIGHT, "blue");
-          }
+          } 
         }
       }
     }
 
     function drawBitmapCenteredWithRotation( useBitmap, atX, atY, withAng ) {
-
       canvasContext.save();
       canvasContext.translate(atX, atY);
       canvasContext.rotate(withAng);
@@ -139,7 +136,6 @@
     function drawEverything() {
       colorRect(0, 0, canvas.width, canvas.height, '#000');
 
-      //colorCircle(carX, carY, 10, '#fff');
       if (carPicLoaded) {
         drawBitmapCenteredWithRotation(carPic, carX, carY, carAng);
       }
@@ -149,14 +145,8 @@
 
     function carMove() {
       carAng += 0.02;
-      //carX += carSpeedX;
-      //carY += carSpeedY;
-
-      // reflects a car from canvas adges
-      if ( carX < 0 && carSpeedX < 0.0) carSpeedX *= -1;
-      if ( carX > canvas.width && carSpeedX > 0.0) carSpeedX *= -1;
-      if ( carY < 0 && carSpeedY < 0.0) carSpeedY *= -1;
-      if ( carY > canvas.height ) carSpeedY *= -1;
+      carX += Math.cos(carAng) * carSpeed;
+      carY += Math.sin(carAng) * carSpeed;
     }
 
     function colRowToArrayIndex(col, row) {
@@ -176,11 +166,11 @@
     }
 
     function getColFromX(x) {
-      return Math.floor(x / (TRACK_WIDTH + TRACK_GAP) + 1)
+      return Math.floor(x / (TRACK_WIDTH + TRACK_GAP) + 1);
     }
 
     function getRowFromY(y) {
-      return Math.floor(y / (TRACK_HEIGHT + TRACK_GAP) + 1)
+      return Math.floor(y / (TRACK_HEIGHT + TRACK_GAP) + 1);
     }
 
     function carTrackHandling() {
@@ -188,14 +178,7 @@
       var trackRow = getRowFromY(carY);
       var trackIndex = colRowToArrayIndex(trackCol, trackRow);
       if ( isTrackAtColRow(trackCol, trackRow) ) {
-          //  where to reflect the car
-          var prevCarX = carX - carSpeedX;
-          var prevCarY = carY - carSpeedY;
-          var prevTrackCol = getColFromX(prevCarX);
-          var prevTrackRow = getRowFromY(prevCarY);
-
-          if (prevTrackCol != trackCol) carSpeedX *= -1;
-          if (prevTrackRow != trackRow) carSpeedY *= -1;
+        carSpeed *= -1;          
       }
     } 
 
