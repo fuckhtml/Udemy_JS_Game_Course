@@ -170,10 +170,12 @@
     }
 
     function carMove() {
+      carSpeed *= 0.97;
+
       if ( keyHeld_turnLeft ) carAng -= ( Math.PI * 2 / (12 * 4) ); 
       if ( keyHeld_turnRight ) carAng += ( Math.PI * 2 / (12 * 4) ); 
-      if ( keyHeld_gus ) carSpeed += 0.2;
-      if ( keyHeld_reverse ) carSpeed -= 0.2;
+      if ( keyHeld_gus ) carSpeed += 0.3;
+      if ( keyHeld_reverse ) carSpeed -= 0.3;
 
       carX += Math.cos(carAng) * carSpeed;
       carY += Math.sin(carAng) * carSpeed;
