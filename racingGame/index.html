@@ -208,7 +208,10 @@
       var trackRow = getRowFromY(carY);
       var trackIndex = colRowToArrayIndex(trackCol, trackRow);
       if ( isTrackAtColRow(trackCol, trackRow) ) {
-        carSpeed *= -1;          
+        carX -= Math.cos(carAng) * carSpeed;
+        carY -= Math.sin(carAng) * carSpeed;
+
+        carSpeed *= -0.5;          
       }
     } 
 
