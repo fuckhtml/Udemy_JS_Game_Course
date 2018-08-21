@@ -17,6 +17,7 @@
 
     var carX;
     var carY;
+    var carAng = 0;
     var carSpeedX = 3;
     var carSpeedY = 3;
 
@@ -28,13 +29,13 @@
     const TRACK_ROWS = 13;
     var trackGrid = [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
                       1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1,
-                      1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+                      1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
                       1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1,
                       1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1,
                       1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1,
                       1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1,
                       1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1,
-                      1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1,
+                      1, 0, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1,
                       1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1,
                       1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1,
                       1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1,
@@ -126,21 +127,30 @@
       }
     }
 
+    function drawBitmapCenteredWithRotation( useBitmap, atX, atY, withAng ) {
+
+      canvasContext.save();
+      canvasContext.translate(atX, atY);
+      canvasContext.rotate(withAng);
+      canvasContext.drawImage(useBitmap, -useBitmap.width / 2, -useBitmap.height / 2);
+      canvasContext.restore();
+    }
+
     function drawEverything() {
       colorRect(0, 0, canvas.width, canvas.height, '#000');
 
       //colorCircle(carX, carY, 10, '#fff');
       if (carPicLoaded) {
-        canvasContext.drawImage(carPic, carX - carPic.width / 2, carY - carPic.height / 2);
+        drawBitmapCenteredWithRotation(carPic, carX, carY, carAng);
       }
 
       drawTracks();
     }
 
     function carMove() {
-
-      carX += carSpeedX;
-      carY += carSpeedY;
+      carAng += 0.02;
+      //carX += carSpeedX;
+      //carY += carSpeedY;
 
       // reflects a car from canvas adges
       if ( carX < 0 && carSpeedX < 0.0) carSpeedX *= -1;
@@ -150,7 +160,7 @@
     }
 
     function colRowToArrayIndex(col, row) {
-      var trackIndexUndercar = ((row - 1) * TRACK_COLS + col) - 1;
+      var trackIndexUnderCar = ((row - 1) * TRACK_COLS + col) - 1;
       return trackIndexUnderCar;
     }
 
