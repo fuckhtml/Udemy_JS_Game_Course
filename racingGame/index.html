@@ -99,6 +99,7 @@
           var arrayIndex = colRowToArrayIndex(col, row);
           if ( trackGrid[arrayIndex] == 2 ) {
             trackGrid[arrayIndex] = 0;
+            carAng = -Math.PI / 2;
             carX = (TRACK_WIDTH + TRACK_GAP) * (col - 1) + TRACK_WIDTH / 2 + TRACK_GAP;
             carY = (TRACK_HEIGHT + TRACK_GAP) * (row - 1) + TRACK_HEIGHT / 2 + TRACK_GAP;
           }
