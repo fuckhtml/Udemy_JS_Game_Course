@@ -1,5 +1,4 @@
-var carPic = document.createElement("img");
-var carPicLoaded = false;
+
 
 var carX;
 var carY;
@@ -23,13 +22,6 @@ function carReset() {
       }
     }
   }
-}
-
-function carImageLoad() {
-  carPic.onload = function() {
-    carPicLoaded = true;
-  }
-  carPic.src = "player_1.png";
 }
 
 function carMove() {
