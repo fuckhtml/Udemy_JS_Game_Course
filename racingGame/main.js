@@ -8,6 +8,7 @@ window.onload = function() {
 
   carReset();
   carImageLoad();
+  trackLoadImages();
   setupInput();
 
   var fps = 30;
