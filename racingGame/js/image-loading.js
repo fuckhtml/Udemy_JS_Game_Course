@@ -27,7 +27,7 @@ function loadImages() {
 
 function beginLoadImage(imgVar, fileName) {
   imgVar.onload = countLoadedImages;
-  imgVar.src = fileName;
+  imgVar.src = "images/" + fileName;
 }
 
 function countLoadedImages() {
