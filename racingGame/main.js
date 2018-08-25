@@ -21,7 +21,6 @@ function updateAll() {
 };
 
 function drawEverything() {
-  clearScreen();
   drawTracks();
   drawCar();
 }
