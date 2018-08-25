@@ -8,5 +8,5 @@ function getColFromX(x) {
 }
 
 function getRowFromY(y) {
-  return Math.floor(y / TRACK_HEIGHT + 1);
+  return Math.floor(y / TRACK_HEIGHT);
 }

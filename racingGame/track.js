@@ -46,9 +46,9 @@ function trackLoadImages() {
 function isWallAtColRow(col, row) {
   var index = colRowToArrayIndex(col, row);
   if ( index < trackGrid.length &&      //*  check if the brick is inside the field
-       col >= 1 && col <= TRACK_COLS && //** check for fixing bug with opposite edge removing
-       row >= 1 && row <= TRACK_ROWS && //**
-       trackGrid[colRowToArrayIndex(col, row)] == TRACK_WALL ) //*** check if is there a wall
+       col >= 0 && col < TRACK_COLS && //** check for fixing bug with opposite edge removing
+       row >= 0 && row < TRACK_ROWS && //**
+       trackGrid[index] == TRACK_WALL ) //*** check if is there a wall
     return true;
   else
     return false;
