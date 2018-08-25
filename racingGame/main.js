@@ -2,7 +2,6 @@ var canvas;
 var canvasContext;
 
 window.onload = function() {
-  // save the canvas for dimensions, and its 2d context for drawing to it
   canvas = document.getElementById("gameCanvas");
   canvasContext = canvas.getContext('2d');
   
