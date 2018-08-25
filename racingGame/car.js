@@ -49,7 +49,6 @@ function carTrackHandling() {
 }
 
 function drawCar() {
-  if (carPicLoaded) {
-    drawBitmapCenteredWithRotation(carPic, carX, carY, carAng);
-  }
+  drawBitmapCenteredWithRotation(carPic, carX, carY, carAng);
+
 }

@@ -7,9 +7,10 @@ window.onload = function() {
   canvasContext = canvas.getContext('2d');
   
   loadImages();
+}
 
+function startGame() {
   carReset();
-
   setupInput();
   var fps = 30;
   setInterval(updateAll, 1000 / fps);
