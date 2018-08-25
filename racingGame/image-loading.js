@@ -5,8 +5,14 @@ var roadPic = document.createElement("img");
 var picsToLoad = 3;
 
 function loadImages() {
-  trackLoadImages();
-  carImageLoad();
+  beginLoadImage(carPic, "player_1.png");
+  beginLoadImage(wallPic, "track_wall.png");
+  beginLoadImage(roadPic, "track_road.png");
+}
+
+function beginLoadImage(imgVar, fileName) {
+  imgVar.onload = countLoadedImages;
+  imgVar.src = fileName;
 }
 
 function countLoadedImages() {
@@ -16,14 +22,6 @@ function countLoadedImages() {
   }
 }
 
-function carImageLoad() {
-  carPic.onload = countLoadedImages;
-  carPic.src = "player_1.png";
-}
 
-function trackLoadImages() {
-  wallPic.onload = countLoadedImages;
-  roadPic.onload = countLoadedImages;
-  wallPic.src="track_wall.png";
-  roadPic.src="track_road.png";
-}
+
+
