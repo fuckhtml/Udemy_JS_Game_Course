@@ -12,14 +12,14 @@ const REVERSE_POWER = 0.2;
 const TURN_RATE = (Math.PI*2 / (12 * 4));
 
 function carReset() {
-  for (var row = 1; row <= TRACK_ROWS; row++) {
-    for (var col = 1; col <= TRACK_COLS; col++) {
+  for (var row = 0; row < TRACK_ROWS; row++) {
+    for (var col = 0; col < TRACK_COLS; col++) {
       var arrayIndex = colRowToArrayIndex(col, row);
       if ( trackGrid[arrayIndex] == TRACK_PLAYERSTART ) {
         trackGrid[arrayIndex] = TRACK_ROAD;
         carAng = -Math.PI / 2;
-        carX = (TRACK_WIDTH + TRACK_GAP) * (col - 1) + TRACK_WIDTH / 2 + TRACK_GAP;
-        carY = (TRACK_HEIGHT + TRACK_GAP) * (row - 1) + TRACK_HEIGHT / 2 + TRACK_GAP;
+        carX = TRACK_WIDTH * col + TRACK_WIDTH / 2;
+        carY = TRACK_HEIGHT * row + TRACK_HEIGHT / 2;
       }
     }
   }

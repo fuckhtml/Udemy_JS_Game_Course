@@ -4,8 +4,6 @@ const TRACK_ROWS = 13;
 const TRACK_WIDTH = 40;
 const TRACK_HEIGHT = 40;
 
-const TRACK_GAP = 5;
-
 const TRACK_ROAD = 0;
 const TRACK_WALL = 1;
 const TRACK_PLAYERSTART = 2;
@@ -30,11 +28,11 @@ var trackGrid = [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 function drawTracks() {
   for (var row = 0; row < TRACK_ROWS; row++) {
     for (var col = 0; col < TRACK_COLS; col++) {
-
       var arrayIndex = colRowToArrayIndex(col, row);
-      console.log(1);
-      if ( trackGrid[isWallAtColRow(col, row)] == TRACK_WALL) {
+      if ( trackGrid[arrayIndex] == TRACK_WALL) {
         canvasContext.drawImage(wallPic, TRACK_WIDTH * col, TRACK_HEIGHT * row);
+      } else if ( trackGrid[arrayIndex] == TRACK_ROAD) {
+        canvasContext.drawImage(roadPic, TRACK_WIDTH * col, TRACK_HEIGHT * row);
       }
     }
   }
@@ -54,17 +52,4 @@ function isWallAtColRow(col, row) {
     return true;
   else
     return false;
-}
-
-function colRowToArrayIndex(col, row) {
-  var trackIndexUnderCar = ((row - 1) * TRACK_COLS + col) - 1;
-  return trackIndexUnderCar;
-}
-
-function getColFromX(x) {
-  return Math.floor(x / (TRACK_WIDTH + TRACK_GAP) + 1);
-}
-
-function getRowFromY(y) {
-  return Math.floor(y / (TRACK_HEIGHT + TRACK_GAP) + 1);
 }
