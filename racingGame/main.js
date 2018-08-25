@@ -2,14 +2,21 @@ var canvas;
 var canvasContext;
 
 window.onload = function() {
-  // save the canvas for dimensions, and its 2d context for drawing to it
   canvas = document.getElementById("gameCanvas");
   canvasContext = canvas.getContext('2d');
-  carImageLoad();
+  
+  showPreloadingScreen();
+
+  loadImages();
+}
+
+function showPreloadingScreen() {
+  colorRect(0, 0, canvas.width, canvas.height, "black");
+  colorText("Images are loading. Wait please.", canvas.width / 2, canvas.height / 2, "white")
+}
+
+function startGame() {
   carReset();
-
-  trackLoadImages();
-
   setupInput();
   var fps = 30;
   setInterval(updateAll, 1000 / fps);

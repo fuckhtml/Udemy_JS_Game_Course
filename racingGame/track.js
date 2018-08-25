@@ -8,8 +8,6 @@ const TRACK_ROAD = 0;
 const TRACK_WALL = 1;
 const TRACK_PLAYERSTART = 2;
 
-var wallPic = document.createElement("img");
-var roadPic = document.createElement("img");
 
 var trackGrid = [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
                   1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1,
@@ -38,10 +36,7 @@ function drawTracks() {
   }
 }
 
-function trackLoadImages() {
-  wallPic.src="track_wall.png";
-  roadPic.src="track_road.png";
-}
+
 
 function isWallAtColRow(col, row) {
   var index = colRowToArrayIndex(col, row);

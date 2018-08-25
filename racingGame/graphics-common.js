@@ -24,8 +24,3 @@ function drawBitmapCenteredWithRotation( useBitmap, atX, atY, withAng ) {
   canvasContext.drawImage(useBitmap, -useBitmap.width / 2, -useBitmap.height / 2);
   canvasContext.restore();
 }
-
-function clearScreen() {
-  colorRect(0, 0, canvas.width, canvas.height, '#000');  
-}
-
