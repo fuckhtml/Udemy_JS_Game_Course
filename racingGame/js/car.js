@@ -9,6 +9,7 @@ function Car() {
   this.y;
   this.ang = 0;
   this.speed = 0;
+  this.picture = document.createElement("img");
 
   this.reset = function() {
     for (var row = 0; row < TRACK_ROWS; row++) {
@@ -55,7 +56,7 @@ function Car() {
   }
 
   this.draw = function() {
-    drawBitmapCenteredWithRotation(carPic, this.x, this.y, this.ang);
+    drawBitmapCenteredWithRotation(this.picture, this.x, this.y, this.ang);
   }
 
 }
