@@ -11,6 +11,23 @@ function Car() {
   this.speed = 0;
   this.picture = document.createElement("img");
 
+  this.keyHeld_gus = false;
+  this.keyHeld_reverse = false;
+  this.keyHeld_turnLeft = false;
+  this.keyHeld_turnRight = false;
+
+  this.controlKeyGus;
+  this.controlKeyReverse;
+  this.controlKeyTurnLeft;
+  this.controlKeyTurnRight;
+
+  this.setupInput = function(keyGus, keyReverse, keyTurnLeft, keyTurnRight) {
+    this.controlKeyGus = keyGus;
+    this.controlKeyReverse = keyReverse;
+    this.controlKeyTurnLeft = keyTurnLeft;
+    this.controlKeyTurnRight = keyTurnRight;
+  }
+
   this.reset = function() {
     for (var row = 0; row < TRACK_ROWS; row++) {
       for (var col = 0; col < TRACK_COLS; col++) {
@@ -42,12 +59,12 @@ function Car() {
     // then moves
     this.speed *= GROUNDSPEED_DECAY_MULT;
 
-    if ( keyHeld_gus ) this.speed += DRIVE_POWER;
-    if ( keyHeld_reverse ) this.speed -= REVERSE_POWER;
+    if ( this.keyHeld_gus ) this.speed += DRIVE_POWER;
+    if ( this.keyHeld_reverse ) this.speed -= REVERSE_POWER;
 
     if (Math.abs(this.speed) > MIN_SPEED_TO_TURN ) {
-      if ( keyHeld_turnLeft ) this.ang -= TURN_RATE; 
-      if ( keyHeld_turnRight ) this.ang += TURN_RATE;     
+      if ( this.keyHeld_turnLeft ) this.ang -= TURN_RATE; 
+      if ( this.keyHeld_turnRight ) this.ang += TURN_RATE;     
     }
 
     this.x += Math.cos(this.ang) * this.speed;

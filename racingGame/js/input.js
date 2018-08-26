@@ -1,21 +1,24 @@
+const KEY_UP_ARROW = 38;
+const KEY_DOWN_ARROW = 40;
+const KEY_LEFT_ARROW = 37;
+const KEY_RIGHT_ARROW = 39;
+
+const KEY_W = 87;
+const KEY_S = 83;
+const KEY_A = 65;
+const KEY_D = 68;
+
 var mouseX = 0;
 var mouseY = 0;
-
-const KEY_LEFT_ARROW = 37;
-const KEY_UP_ARROW = 38;
-const KEY_RIGHT_ARROW = 39;
-const KEY_DOWN_ARROW = 40;
-
-var keyHeld_gus = false;
-var keyHeld_reverse = false;
-var keyHeld_turnLeft = false;
-var keyHeld_turnRight = false;
 
 function setupInput() {
   canvas.addEventListener('mousemove', updateMousePos);
   
   document.addEventListener('keydown', keyPressed);
   document.addEventListener('keyup', keyReleased);
+
+  blueCar.setupInput(KEY_W, KEY_S, KEY_A, KEY_D);
+  redCar.setupInput(KEY_UP_ARROW, KEY_DOWN_ARROW, KEY_LEFT_ARROW, KEY_RIGHT_ARROW);
 }
 
 function updateMousePos(event) {
@@ -25,23 +28,24 @@ function updateMousePos(event) {
   mouseX = event.clientX - rect.left - root.scrollLeft
   mouseY = event.clientY - rect.top - root.scrollTop;
 
-  // cheat / to check for bugs 
-  /*
+  /* cheat to check for bugs 
   carX = mouseX;
-  carY = mouseY;
-  */
+  carY = mouseY; */
 }
 
 function keyPressed(event) {
-  if ( event.keyCode == KEY_LEFT_ARROW ) keyHeld_turnLeft = true;
-  if ( event.keyCode == KEY_RIGHT_ARROW ) keyHeld_turnRight = true;
-  if ( event.keyCode == KEY_UP_ARROW ) keyHeld_gus = true;
-  if ( event.keyCode == KEY_DOWN_ARROW ) keyHeld_reverse = true;
+  keySet(event, blueCar, true);
+  keySet(event, redCar, true);
 }
 
 function keyReleased(event) {
-  if ( event.keyCode == KEY_LEFT_ARROW ) keyHeld_turnLeft = false;
-  if ( event.keyCode == KEY_RIGHT_ARROW ) keyHeld_turnRight = false;
-  if ( event.keyCode == KEY_UP_ARROW ) keyHeld_gus = false;
-  if ( event.keyCode == KEY_DOWN_ARROW ) keyHeld_reverse = false;
+  keySet(event, blueCar, false);
+  keySet(event, redCar, false);
+}
+
+function keySet(event, car, value) {
+  if ( event.keyCode == car.controlKeyGus ) car.keyHeld_gus = value;
+  if ( event.keyCode == car.controlKeyReverse ) car.keyHeld_reverse = value;
+  if ( event.keyCode == car.controlKeyTurnLeft ) car.keyHeld_turnLeft = value;
+  if ( event.keyCode == car.controlKeyTurnRight ) car.keyHeld_turnRight = value;
 }
