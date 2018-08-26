@@ -29,19 +29,21 @@ var trackGrid = [ 4, 4, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4,
                   1, 1, 1, 1, 1, 1, 1, 4, 4, 4, 4, 4, 4, 4, 1, 1, 1, 1, 1, 4 ];
 
 function drawTracks() {
+  var arrayIndex = 0;
+  var x = 0;
+  var y = 0;
   for (var row = 0; row < TRACK_ROWS; row++) {
     for (var col = 0; col < TRACK_COLS; col++) {
-      var arrayIndex = colRowToArrayIndex(col, row);
       var tileKindHere = trackGrid[arrayIndex];
       var useImg = trackPics[tileKindHere];
-      var x = TRACK_WIDTH * col;
-      var y = TRACK_HEIGHT * row;
       canvasContext.drawImage(useImg, x, y);
-    } // end of for loop col
-  } // end of for loop row
-} // end of drawTracks() function
-
-
+      arrayIndex++;
+      x += TRACK_WIDTH;
+    }
+    x = 0;
+    y += TRACK_HEIGHT;
+  } 
+}
 
 function isObstacleAtColRow(col, row) {
   var index = colRowToArrayIndex(col, row);
