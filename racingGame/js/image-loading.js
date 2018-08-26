@@ -1,33 +1,38 @@
 var carPic = document.createElement("img");
-var wallPic = document.createElement("img");
-var roadPic = document.createElement("img");
-var goalPic = document.createElement("img");
-var treePic = document.createElement("img");
-var flagPic = document.createElement("img");
+var trackPics = [];
 
 var picsToLoad = 0; // set automatically based on imageList in loadImages();
 
 function loadImages() {
 
   var imageList = [
-    { varName: carPic, theFile: "player_1.png" },
-    { varName: wallPic, theFile: "track_wall.png" },
-    { varName: roadPic, theFile: "track_road.png" },
-    { varName: goalPic, theFile: "track_goal.png" },
-    { varName: treePic, theFile: "track_tree.png" },
-    { varName: flagPic, theFile: "track_flag.png" }
+    { varName: carPic, fileName: "player_1.png" },
+    { trackCode: TRACK_WALL, fileName: "track_wall.png" },
+    { trackCode: TRACK_ROAD, fileName: "track_road.png" },
+    { trackCode: TRACK_GOAL, fileName: "track_goal.png" },
+    { trackCode: TRACK_TREE, fileName: "track_tree.png" },
+    { trackCode: TRACK_FLAG, fileName: "track_flag.png" }
   ];
 
   picsToLoad = imageList.length;
 
   for (var i = 0; i < imageList.length; i++) {
-    beginLoadImage(imageList[i].varName, imageList[i].theFile);
+    if ( imageList[i].varName != undefined ) {
+      loadImage(imageList[i].varName, imageList[i].fileName);
+    } else {
+      createVarOfTrackImage(imageList[i].trackCode, imageList[i].fileName);
+      loadImage(trackPics[imageList[i].trackCode], imageList[i].fileName);
+    }
   }
 }
 
-function beginLoadImage(imgVar, fileName) {
+function loadImage(imgVar, fileName) {
   imgVar.onload = countLoadedImages;
   imgVar.src = "images/" + fileName;
+}
+
+function createVarOfTrackImage(trackCode, fileName) {
+  trackPics[trackCode] = document.createElement("img");
 }
 
 function countLoadedImages() {
