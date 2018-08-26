@@ -1,5 +1,7 @@
-var canvas;
-var canvasContext;
+var canvas, canvasContext;
+
+var blueCar = new Car();
+var redCar = new Car();
 
 window.onload = function() {
   canvas = document.getElementById("gameCanvas");
@@ -16,7 +18,9 @@ function showPreloadingScreen() {
 }
 
 function startGame() {
-  carReset();
+  blueCar.reset();
+  redCar.reset();
+
   setupInput();
   var fps = 30;
   setInterval(updateAll, 1000 / fps);
@@ -29,10 +33,11 @@ function updateAll() {
 
 function drawEverything() {
   drawTracks();
-  drawCar();
+  blueCar.draw();
+  redCar.draw();
 }
 
 function moveEverything() {
-  carMove();
-  carTrackHandling();
+  blueCar.move();
+  redCar.move();
 }

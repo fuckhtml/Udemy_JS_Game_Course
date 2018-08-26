@@ -1,56 +1,79 @@
-var carX;
-var carY;
-var carAng = 0;
-var carSpeed = 0;
-
 const GROUNDSPEED_DECAY_MULT = 0.97;
 const DRIVE_POWER = 0.5;
 const REVERSE_POWER = 0.2;
 const TURN_RATE = (Math.PI*2 / (12 * 8));
 const MIN_SPEED_TO_TURN = 0.3;
 
-function carReset() {
-  for (var row = 0; row < TRACK_ROWS; row++) {
-    for (var col = 0; col < TRACK_COLS; col++) {
-      var arrayIndex = colRowToArrayIndex(col, row);
-      if ( trackGrid[arrayIndex] == TRACK_PLAYERSTART ) {
-        trackGrid[arrayIndex] = TRACK_ROAD;
-        carAng = -Math.PI / 2;
-        carX = TRACK_WIDTH * col + TRACK_WIDTH / 2;
-        carY = TRACK_HEIGHT * row + TRACK_HEIGHT / 2;
-      }
+function Car() {
+  this.x;
+  this.y;
+  this.ang = 0;
+  this.speed = 0;
+  this.picture = document.createElement("img");
+
+  this.keyHeld_gus = false;
+  this.keyHeld_reverse = false;
+  this.keyHeld_turnLeft = false;
+  this.keyHeld_turnRight = false;
+
+  this.controlKeyGus;
+  this.controlKeyReverse;
+  this.controlKeyTurnLeft;
+  this.controlKeyTurnRight;
+
+  this.setupInput = function(keyGus, keyReverse, keyTurnLeft, keyTurnRight) {
+    this.controlKeyGus = keyGus;
+    this.controlKeyReverse = keyReverse;
+    this.controlKeyTurnLeft = keyTurnLeft;
+    this.controlKeyTurnRight = keyTurnRight;
+  }
+
+  this.reset = function() {
+    for (var row = 0; row < TRACK_ROWS; row++) {
+      for (var col = 0; col < TRACK_COLS; col++) {
+        var arrayIndex = colRowToArrayIndex(col, row);
+        if ( trackGrid[arrayIndex] == TRACK_PLAYERSTART ) {
+          trackGrid[arrayIndex] = TRACK_ROAD;
+          this.ang = -Math.PI / 2;
+          this.x = TRACK_WIDTH * col + TRACK_WIDTH / 2;
+          this.y = TRACK_HEIGHT * row + TRACK_HEIGHT / 2;
+          return;
+        } // end of player if
+      } // end of for loop for columns
+    } // end of for loop for rows
+  } // end of carReset function
+  
+  this.move = function() {
+
+    // checks for collision
+    var trackCol = getColFromX(this.x);
+    var trackRow = getRowFromY(this.y);
+    var trackIndex = colRowToArrayIndex(trackCol, trackRow);
+    if ( isObstacleAtColRow(trackCol, trackRow) ) {
+      this.x -= Math.cos(this.ang) * this.speed;
+      this.y -= Math.sin(this.ang) * this.speed;
+
+      this.speed *= -0.5;          
     }
+
+    // then moves
+    this.speed *= GROUNDSPEED_DECAY_MULT;
+
+    if ( this.keyHeld_gus ) this.speed += DRIVE_POWER;
+    if ( this.keyHeld_reverse ) this.speed -= REVERSE_POWER;
+
+    if (Math.abs(this.speed) > MIN_SPEED_TO_TURN ) {
+      if ( this.keyHeld_turnLeft ) this.ang -= TURN_RATE; 
+      if ( this.keyHeld_turnRight ) this.ang += TURN_RATE;     
+    }
+
+    this.x += Math.cos(this.ang) * this.speed;
+    this.y += Math.sin(this.ang) * this.speed;
+
   }
-}
 
-function carMove() {
-  carSpeed *= GROUNDSPEED_DECAY_MULT;
-
-  if ( keyHeld_gus ) carSpeed += DRIVE_POWER;
-  if ( keyHeld_reverse ) carSpeed -= REVERSE_POWER;
-
-  if (Math.abs(carSpeed) > MIN_SPEED_TO_TURN ) {
-    if ( keyHeld_turnLeft ) carAng -= TURN_RATE; 
-    if ( keyHeld_turnRight ) carAng += TURN_RATE;     
+  this.draw = function() {
+    drawBitmapCenteredWithRotation(this.picture, this.x, this.y, this.ang);
   }
-
-  carX += Math.cos(carAng) * carSpeed;
-  carY += Math.sin(carAng) * carSpeed;
-}
-
-function carTrackHandling() {
-  var trackCol = getColFromX(carX);
-  var trackRow = getRowFromY(carY);
-  var trackIndex = colRowToArrayIndex(trackCol, trackRow);
-  if ( isObstacleAtColRow(trackCol, trackRow) ) {
-    carX -= Math.cos(carAng) * carSpeed;
-    carY -= Math.sin(carAng) * carSpeed;
-
-    carSpeed *= -0.5;          
-  }
-}
-
-function drawCar() {
-  drawBitmapCenteredWithRotation(carPic, carX, carY, carAng);
 
 }
