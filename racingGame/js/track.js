@@ -44,14 +44,3 @@ function drawTracks() {
     y += TRACK_HEIGHT;
   } 
 }
-
-function isObstacleAtColRow(col, row) {
-  var index = colRowToArrayIndex(col, row);
-  if ( index < trackGrid.length &&      //*  check if the brick is inside the field
-       col >= 0 && col < TRACK_COLS && //** check for fixing bug with opposite edge removing
-       row >= 0 && row < TRACK_ROWS && //**
-       trackGrid[index] != TRACK_ROAD ) //*** check if is there a wall
-    return true;
-  else
-    return false;
-}

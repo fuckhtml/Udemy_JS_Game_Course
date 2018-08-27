@@ -4,12 +4,15 @@ const REVERSE_POWER = 0.2;
 const TURN_RATE = (Math.PI*2 / (12 * 8));
 const MIN_SPEED_TO_TURN = 0.3;
 
-function Car() {
+function Car(name, pictureName) {
+  this.name;
+  this.picture = document.createElement("img");
+  this.pictureName = pictureName;
+
   this.x;
   this.y;
   this.ang = 0;
   this.speed = 0;
-  this.picture = document.createElement("img");
 
   this.keyHeld_gus = false;
   this.keyHeld_reverse = false;
@@ -49,11 +52,12 @@ function Car() {
     var trackCol = getColFromX(this.x);
     var trackRow = getRowFromY(this.y);
     var trackIndex = colRowToArrayIndex(trackCol, trackRow);
-    if ( isObstacleAtColRow(trackCol, trackRow) ) {
+    var tileType = returnTileTypeAtColRow(trackCol, trackRow);
+    if ( tileType != TRACK_ROAD ) {
       this.x -= Math.cos(this.ang) * this.speed;
       this.y -= Math.sin(this.ang) * this.speed;
 
-      this.speed *= -0.5;          
+      this.speed *= -0.5; 
     }
 
     // then moves
@@ -69,7 +73,16 @@ function Car() {
 
     this.x += Math.cos(this.ang) * this.speed;
     this.y += Math.sin(this.ang) * this.speed;
+  }
 
+
+  function returnTileTypeAtColRow(col, row) {
+    var index = colRowToArrayIndex(col, row);
+    if ( col >= 0 && col < TRACK_COLS && //** check for fixing bug with opposite edge removing
+         row >= 0 && row < TRACK_ROWS )
+      return trackGrid[index];
+    else
+      return TRACK_WALL;
   }
 
   this.draw = function() {
