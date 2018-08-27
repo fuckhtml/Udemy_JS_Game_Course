@@ -5,7 +5,7 @@ const TURN_RATE = (Math.PI*2 / (12 * 8));
 const MIN_SPEED_TO_TURN = 0.3;
 
 function Car(name, pictureName) {
-  this.name;
+  this.name = name;
   this.picture = document.createElement("img");
   this.pictureName = pictureName;
 
@@ -53,7 +53,9 @@ function Car(name, pictureName) {
     var trackRow = getRowFromY(this.y);
     var trackIndex = colRowToArrayIndex(trackCol, trackRow);
     var tileType = returnTileTypeAtColRow(trackCol, trackRow);
-    if ( tileType != TRACK_ROAD ) {
+    if ( tileType == TRACK_GOAL ) {
+      console.log(this.name);
+    } else if ( tileType != TRACK_ROAD ) {
       this.x -= Math.cos(this.ang) * this.speed;
       this.y -= Math.sin(this.ang) * this.speed;
 

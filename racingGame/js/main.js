@@ -18,12 +18,16 @@ function showPreloadingScreen() {
 }
 
 function startGame() {
-  blueCar.reset();
-  redCar.reset();
-
+  loadLevel(levelOne);  
   setupInput();
   var fps = 30;
   setInterval(updateAll, 1000 / fps);
+}
+
+function loadLevel(level) {
+  trackGrid = level.slice();
+  blueCar.reset();
+  redCar.reset();
 }
 
 function updateAll() {
