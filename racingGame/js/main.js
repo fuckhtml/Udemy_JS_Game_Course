@@ -1,7 +1,7 @@
 var canvas, canvasContext;
 
-var blueCar = new Car();
-var redCar = new Car();
+var blueCar = new Car("Sky Flash", "car_blue.png");
+var redCar = new Car("Red Arrow", "car_red.png");
 
 window.onload = function() {
   canvas = document.getElementById("gameCanvas");
@@ -18,12 +18,16 @@ function showPreloadingScreen() {
 }
 
 function startGame() {
-  blueCar.reset();
-  redCar.reset();
-
+  loadLevel(levelOne);  
   setupInput();
   var fps = 30;
   setInterval(updateAll, 1000 / fps);
+}
+
+function loadLevel(level) {
+  trackGrid = level.slice();
+  blueCar.reset();
+  redCar.reset();
 }
 
 function updateAll() {

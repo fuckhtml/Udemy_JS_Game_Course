@@ -11,8 +11,7 @@ const TRACK_GOAL = 3;
 const TRACK_TREE = 4;
 const TRACK_FLAG = 5;
 
-
-var trackGrid = [ 4, 4, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4,
+var levelOne = [  4, 4, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4,
                   4, 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1,
                   4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
                   1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1,
@@ -26,7 +25,10 @@ var trackGrid = [ 4, 4, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4,
                   1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
                   0, 3, 0, 0, 0, 0, 1, 4, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 
                   0, 3, 0, 0, 0, 0, 1, 4, 4, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1,
-                  1, 1, 1, 1, 1, 1, 1, 4, 4, 4, 4, 4, 4, 4, 1, 1, 1, 1, 1, 4 ];
+                  1, 1, 1, 1, 1, 1, 1, 4, 4, 4, 4, 4, 4, 4, 1, 1, 1, 1, 1, 4  ];
+var levelList = [levelOne];
+
+var trackGrid = [];
 
 function drawTracks() {
   var arrayIndex = 0;
@@ -43,15 +45,4 @@ function drawTracks() {
     x = 0;
     y += TRACK_HEIGHT;
   } 
-}
-
-function isObstacleAtColRow(col, row) {
-  var index = colRowToArrayIndex(col, row);
-  if ( index < trackGrid.length &&      //*  check if the brick is inside the field
-       col >= 0 && col < TRACK_COLS && //** check for fixing bug with opposite edge removing
-       row >= 0 && row < TRACK_ROWS && //**
-       trackGrid[index] != TRACK_ROAD ) //*** check if is there a wall
-    return true;
-  else
-    return false;
 }

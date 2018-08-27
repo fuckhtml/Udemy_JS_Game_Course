@@ -5,8 +5,8 @@ var picsToLoad = 0; // set automatically based on imageList in loadImages();
 function loadImages() {
 
   var imageList = [
-    { car: blueCar.picture, fileName: "car_blue.png" },
-    { car: redCar.picture,  fileName: "car_red.png" },
+    { car: blueCar.picture, fileName: blueCar.pictureName },
+    { car: redCar.picture,  fileName: redCar.pictureName },
     { trackCode: TRACK_WALL, fileName: "track_wall.png" },
     { trackCode: TRACK_ROAD, fileName: "track_road.png" },
     { trackCode: TRACK_GOAL, fileName: "track_goal.png" },
@@ -41,7 +41,3 @@ function countLoadedImages() {
     startGame();
   }
 }
-
-
-
-
