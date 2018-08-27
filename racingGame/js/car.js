@@ -32,6 +32,7 @@ function Car(name, pictureName) {
   }
 
   this.reset = function() {
+    this.speed = 0;
     for (var row = 0; row < TRACK_ROWS; row++) {
       for (var col = 0; col < TRACK_COLS; col++) {
         var arrayIndex = colRowToArrayIndex(col, row);
@@ -44,6 +45,7 @@ function Car(name, pictureName) {
         } // end of player if
       } // end of for loop for columns
     } // end of for loop for rows
+    console.log("NO PLAYER START FOUND")
   } // end of carReset function
   
   this.move = function() {
@@ -55,6 +57,7 @@ function Car(name, pictureName) {
     var tileType = returnTileTypeAtColRow(trackCol, trackRow);
     if ( tileType == TRACK_GOAL ) {
       console.log(this.name);
+      loadLevel(levelOne);
     } else if ( tileType != TRACK_ROAD ) {
       this.x -= Math.cos(this.ang) * this.speed;
       this.y -= Math.sin(this.ang) * this.speed;
