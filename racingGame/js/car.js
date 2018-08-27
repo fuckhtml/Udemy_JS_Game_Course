@@ -45,7 +45,7 @@ function Car(name, pictureName) {
         } // end of player if
       } // end of for loop for columns
     } // end of for loop for rows
-    console.log("NO PLAYER START FOUND")
+    console.log("NO PLAYER START FOUND");
   } // end of carReset function
   
   this.move = function() {
